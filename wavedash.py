@@ -1,5 +1,10 @@
 from pyo import *
-s = Server().boot()
+import sys
+if len(sys.argv) > 1:
+    #asio
+    s = Server(winhost=sys.argv[1]).boot()
+else:
+    s = Server().boot()
 freq = 200
 #lfo = Sine(0.2, mul = 0.5, add=0.5)
 #lfo = Sine(0.2, mul = 0.0, add=0.0)

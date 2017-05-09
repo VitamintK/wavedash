@@ -1,0 +1,11 @@
+from pyo import *
+s = Server(winhost="asio").boot()
+s.start()
+drv = Sine(.5, phase=[0, 0.5], mul=0.49, add=0.5)
+sig = SfPlayer(SNDS_PATH+"/transparent.aif", loop=True)
+s.beginResamplingBlock(1)
+sigup = Resample(sig, mode=32)
+drvup = Resample(drv, mode=1)
+disto = Disto(sigup, drive=drvup, mul=0.5)
+s.endResamplingBlock()
+sigdown = Resample(disto, mode=32, mul=0.4).out()
