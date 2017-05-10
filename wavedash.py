@@ -78,6 +78,16 @@ buttons = {}
 for b in range(joy.get_numbuttons()):
     pass
 
+t = NewTable(length = 5, chnls = 1)
+a = Input(0)
+T = TableRec(a, t, 0.01)
+amp = Iter(T['trig'], [0.5])
+Freq = t.getRate()
+c = Looper(t,1,dur=2,mul=amp)
+pva = PVAnal(c, size=1024)
+pvt = PVTranspose(pva, transpo=1)
+pvs = PVSynth(pvt).out()
+recording = False
 while True:
     #tix+=1
     pygame.event.pump()
@@ -106,11 +116,25 @@ while True:
     #print(midiToHz(math.floor(x*40 + 60)))
     if True:
         for b in range(joy.get_numbuttons()):
+                
+                    #else:
+                        #recording = False
+                        
     		if joy.get_button(b):
-        		osc.setFreq(midiToHz(math.floor(x*12+b + 70)))
-        		osc.out()
-        		print(b)
-        		break
+                        if b == 2:
+                            if not recording:
+                                recording = True
+                                T.play()
+                            else:
+                                pass#recording 
+                        else:
+                            #osc.setFreq(midiToHz(math.floor(x*12+b + 70)))
+                            #osc.out()
+                            print(b)
+                            #c.setPitch(b/14.0+.85)
+                            #c.out()
+                            pvt.setTranspo(b/12.0 + .12)
+                            break
         else:
        		osc.stop()
     	#osc.setFreq(midiToHz(math.floor(x*44 + 60)))
