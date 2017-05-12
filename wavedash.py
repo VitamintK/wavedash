@@ -126,17 +126,23 @@ while True:
                                 recording = True
                                 T.play()
                             else:
-                                pass#recording 
+                                if pvs.isOutputting():
+                                    pvs.stop()
+                                else:
+                                    pvs.out()
+                                    print('out')
                         else:
-                            #osc.setFreq(midiToHz(math.floor(x*12+b + 70)))
-                            #osc.out()
+                            osc.setFreq(midiToHz(math.floor(x*12+b + 70)))
+                            osc.out()
                             print(b)
-                            #c.setPitch(b/14.0+.85)
-                            #c.out()
-                            pvt.setTranspo(b/12.0 + .12)
+                            #the following two lines of code will change the
+                            #pitch of the recorded sample:
+                            #pvt.setTranspo(pow((13/12.0), round(x) + b-4))
+                            #pvs.out()
                             break
         else:
        		osc.stop()
+       		#pvs.stop()
     	#osc.setFreq(midiToHz(math.floor(x*44 + 60)))
     else:
 	    if joy.get_button(1):
