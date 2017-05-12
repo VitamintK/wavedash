@@ -8,9 +8,9 @@ else:
 freq = 200
 #lfo = Sine(0.2, mul = 0.5, add=0.5)
 #lfo = Sine(0.2, mul = 0.0, add=0.0)
-osc = LFO(freq=freq,mul=0.9)
+osc_ = LFO(freq=freq,mul=0.9)
 
-b = Degrade(osc, bitdepth=8).out()
+osc = Degrade(osc_, bitdepth=8).out()
 #osc.ctrl()
 #lfo.ctrl()
 #sc = Scope(osc)
@@ -68,8 +68,17 @@ joy.init()
 
 
 #randloc = (random.random()*200+100, random.random()*200 + 100)
-
-ARPEGGIO = [0,3,6]
+BASE = 0
+def pat(args):
+        base, ctr = args
+        arp = [0,4,7,10,13]
+        ctr[0]  = (ctr[0]+1)%len(arp)
+        #f = random.randrange(200, 401, 25)
+        print(ctr)
+        f = BASE*pow(2,(arp[ctr[0]]/12.0))
+        osc_.freq = [f, f+1]
+p = Pattern(pat, 0.1, (330,[0]))
+p.play()
 osc.stop()
 import math
 #tix = 0
@@ -87,6 +96,8 @@ c = Looper(t,1,dur=2,mul=amp)
 pva = PVAnal(c, size=1024)
 pvt = PVTranspose(pva, transpo=1)
 pvs = PVSynth(pvt).out()
+#p = Pattern(pat, .2, ([0],[0]))
+
 recording = False
 while True:
     #tix+=1
@@ -132,7 +143,11 @@ while True:
                                     pvs.out()
                                     print('out')
                         else:
-                            osc.setFreq(midiToHz(math.floor(x*12+b + 70)))
+                            BASE = midiToHz(math.floor(x*12+b + 50))
+                            if not p.isPlaying():
+                                p.setArg(([BASE],[0]))
+                                p.play()
+                            #osc.setFreq(midiToHz(math.floor(x*12+b + 70)))
                             osc.out()
                             print(b)
                             #the following two lines of code will change the
@@ -141,8 +156,9 @@ while True:
                             #pvs.out()
                             break
         else:
-       		osc.stop()
-       		#pvs.stop()
+            p.stop()
+            osc.stop()
+            #pvs.stop()
     	#osc.setFreq(midiToHz(math.floor(x*44 + 60)))
     else:
 	    if joy.get_button(1):
