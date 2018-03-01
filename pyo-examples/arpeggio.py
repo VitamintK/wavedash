@@ -5,7 +5,7 @@ t = HarmTable([1,0,.33,0,.2,0,.143,0,.111])
 a = Osc(table=t, freq=[250,251], mul=.2).out()
 
 if False:
-    #dominant 7 arpeggio
+    #dominant 7 arpeggio up and down
     def pat(args):
         base, ctr = args
         arp = [0,4,7,10,7,4,0,0,0,0,-1000,-1000]
@@ -16,8 +16,8 @@ if False:
     p = Pattern(pat, .2, (330,[0]))
     p.play()
 if True:
-    import random
     #meanderer
+    import random
     def pat(args):
         markov = [[0.6,0.2,0.2],[0.4,0.4,0.2],[0.15,0.25,0.6]]
         base, direction = args
@@ -38,6 +38,7 @@ if True:
     p.play()
 
 if False:
+    
     t = NewTable(length = 2, chnls = 1)
     a = Input(0)
     b = TableRec(a, t, 0.01)
