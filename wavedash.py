@@ -87,7 +87,7 @@ while True:
                     #else:
                         #recording = False
                         
-    		if joy.get_button(b):
+            if joy.get_button(b):
                         if b == 2:
                             if not recording:
                                 recording = True
@@ -115,15 +115,15 @@ while True:
             p.stop()
             osc.stop()
             #pvs.stop()
-    	#osc.setFreq(midiToHz(math.floor(x*44 + 60)))
+        #osc.setFreq(midiToHz(math.floor(x*44 + 60)))
     else:
-	    if joy.get_button(1):
-	    	osc.setFreq(midiToHz(math.floor(x*12 + 70)))
-	    	osc.out()
-	    elif joy.get_button(2):
-	    	osc.setFreq(midiToHz(math.floor(x*12 + 58)))
-	    	osc.out()
-	    else:
-	    	osc.stop()
+        if joy.get_button(1):
+            osc.setFreq(midiToHz(math.floor(x*12 + 70)))
+            osc.out()
+        elif joy.get_button(2):
+            osc.setFreq(midiToHz(math.floor(x*12 + 58)))
+            osc.out()
+        else:
+            osc.stop()
 
     clk.tick(30)
