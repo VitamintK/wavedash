@@ -1,5 +1,5 @@
 from pyo import *
-s = Server().boot()
+s = Server(winhost="asio").boot()
 # Sets fundamental frequency.
 freq = 200
 
