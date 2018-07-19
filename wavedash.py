@@ -116,8 +116,8 @@ class MonolithPleaseChangeNameLater:
                     self.loopers[button].stop()
                     print("{} stop".format(button))
                 else:
-                    #self.loopers[button].play()
-                    self.loopers[button].reset()
+                    
+                    self.loopers[button].reset()#this line makes the loop play from the beginning when u stop and start it.
                     self.loopers[button].out()
                     print('{} play'.format(button))
 
